@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 module.exports = async function (context, req) {
-  const message = req.body;
+ /* const message = req.body;
   message.sender = req.headers && req.headers['x-ms-client-principal-name'] || '';
 
   let recipientUserId = message.recipient;
@@ -10,9 +10,9 @@ module.exports = async function (context, req) {
       recipientUserId = message.recipient;
       message.isPrivate = true;
   }
-
+*/
   return {
-      'userId': recipientUserId,
+   //   'userId': recipientUserId,
       'target': 'newMessage',
       'arguments': [ message ]
   };
