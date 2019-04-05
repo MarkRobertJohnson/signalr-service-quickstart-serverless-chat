@@ -64,6 +64,7 @@
     const data = {
       username: '',
       newMessage: '',
+      recipient: '',
       messages: [],
       ready: false
     };
@@ -73,7 +74,7 @@
       data: data,
       methods: {
         sendNewMessage: function () {
-          sendMessage(this.username, this.newMessage);
+          sendMessage(this.username, this.newMessage, this.recipient);
           this.newMessage = '';
         }
       }
@@ -100,16 +101,21 @@
       .then(() => data.ready = true)
       .catch(console.error);
 
-    function sendMessage(sender, messageText) {
+    function sendMessage(sender, messageText, recipient) {
       return axios.post(`${apiBaseUrl}/api/messages`, {
         sender: sender,
-        text: messageText
+        text: messageText,
+        recipient: recipient
       }).then(resp => resp.data);
     }
 
     let counter = 0;
     function newMessage(message) {
       message.id = counter++; // vue transitions need an id
+      console.log(message);
+      if(message.recipient == data.username) {
+        message.text = "* " + message.text;
+      }
       data.messages.unshift(message);
     }
   </script>
